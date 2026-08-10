@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [7.0.0-32](https://github.com/Infomaximum/widget-sdk/compare/v7.0.0-31...v7.0.0-32) (2026-08-10)
+
+
+### Bug Fixes
+
+* **BI-15425:** remove INTEGER to Float64 substitution in range filters ([9fd2c0e](https://github.com/Infomaximum/widget-sdk/commit/9fd2c0e6b41e7f9f859fb6136ceb712afe60b167))
+
 ## [7.0.0-31](https://github.com/Infomaximum/widget-sdk/compare/v7.0.0-30...v7.0.0-31) (2026-06-22)
 
 
