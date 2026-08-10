@@ -12,7 +12,6 @@ import { EClickHouseBaseTypes, parseClickHouseType } from "../../clickHouseTypes
 import { EFormatTypes } from "@infomaximum/bi-formatting";
 import { fillTemplateSql } from "../../indicatorsFormulas";
 import { displayConditionTemplate } from "./displayCondition";
-import { ESimpleDataType } from "../../data";
 import { prepareFormulaForSql } from "./prepareFormulaForSql";
 import { VersionedEnum, type TVersionedEnumValues } from "../../versionedEnum";
 
@@ -224,16 +223,11 @@ export const mapFormulaFilterToCalculatorInput = (
     formula = applyIndexToArrayFormula(formula, sliceIndex);
   }
 
-  if (
-    filteringMethod === formulaFilterMethods.IN_RANGE ||
-    filteringMethod === formulaFilterMethods.NOT_IN_RANGE
-  ) {
-    const { simpleType } = parseClickHouseType(dbDataType);
-
-    if (simpleType === ESimpleDataType.INTEGER) {
-      dbDataType = EClickHouseBaseTypes.Float64;
-    }
-  }
+  // Подмена INTEGER → Float64 для IN_RANGE/NOT_IN_RANGE отсюда убрана (BI-15425).
+  // Правило выбора типа каста теперь единое и живёт в потребителе —
+  // Calculator.prepareFilters (packages/bi-data/src/calculators/calculator.ts).
+  // Подмена здесь искажала ICalculatorFilter.dbDataType для всех потребителей
+  // маппера и тихо отключала точный каст UInt128 из BI-14465 в режиме диапазона.
 
   return {
     formula,
